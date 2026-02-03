@@ -1,0 +1,219 @@
+/* media/simulator.css */
+
+:root {
+    --bg: #1e1e1e;
+    --panel: #252526;
+    --border: #3c3c3c;
+    --text: #d4d4d4;
+    --muted: #9da5b4;
+    --accent: #0e639c;
+    --accent-hover: #1177bb;
+    --success: #2ea043;
+    --danger: #f85149;
+    --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    --sans: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 12px;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 12px;
+}
+
+/* ---------- Layout ---------- */
+
+.section {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.section-title {
+    font-size: 11px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 6px;
+    letter-spacing: 0.04em;
+}
+
+/* ---------- Buttons ---------- */
+
+button {
+    background: var(--accent);
+    border: none;
+    color: white;
+    padding: 6px 10px;
+    font-size: 12px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: var(--accent-hover);
+}
+
+button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+button.secondary {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text);
+}
+
+button.secondary:hover {
+    background: #333;
+}
+
+/* ---------- Inputs ---------- */
+
+label {
+    display: block;
+    margin-bottom: 4px;
+    color: var(--muted);
+}
+
+input,
+textarea {
+    width: 100%;
+    background: #1b1b1b;
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 6px;
+    border-radius: 4px;
+    font-family: var(--mono);
+    font-size: 11px;
+}
+
+textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+input:focus,
+textarea:focus {
+    outline: none;
+    border-color: var(--accent);
+}
+
+/* ---------- File paths ---------- */
+
+.file-path {
+    margin-top: 4px;
+    font-size: 11px;
+    color: var(--muted);
+    word-break: break-all;
+}
+
+/* ---------- Actions ---------- */
+
+.actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 6px;
+}
+
+/* ---------- Output ---------- */
+
+.output {
+    background: #0f0f0f;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 8px;
+    font-family: var(--mono);
+    font-size: 11px;
+    white-space: pre-wrap;
+    max-height: 220px;
+    overflow: auto;
+}
+
+.output.success {
+    color: var(--success);
+}
+
+.output.error {
+    color: var(--danger);
+}
+
+/* Network selector */
+.network-row {
+    display: flex;
+    gap: 6px;
+    margin-top: 6px;
+}
+
+.network-row select,
+.network-row input {
+    flex: 1;
+    padding: 6px 8px;
+    background: #1e1e1e;
+    color: #ddd;
+    border: 1px solid #333;
+    border-radius: 4px;
+    font-size: 12px;
+}
+
+.network-row select:focus,
+.network-row input:focus {
+    outline: none;
+    border-color: #4f8cff;
+}
+
+/* Action buttons */
+button.primary {
+    background: #4f8cff;
+    color: white;
+    border: none;
+    padding: 6px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+button.primary:hover {
+    background: #3b76e0;
+}
+
+/* Status messages */
+.status {
+    margin-top: 6px;
+    padding: 6px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+}
+
+.status.success {
+    background: #0f2e1f;
+    color: #4caf80;
+    border: 1px solid #1f5c3d;
+}
+
+.status.error {
+    background: #2a1414;
+    color: #ff6b6b;
+    border: 1px solid #6b2a2a;
+}
+
+.file-path.muted {
+    color: #888;
+    font-size: 11px;
+}
+
+#generateProtocol {
+    margin-top: 10px;
+}
+
+#pickProtocol {
+    margin-top: 10px;
+}
