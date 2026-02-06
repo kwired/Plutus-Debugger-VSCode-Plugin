@@ -11,7 +11,7 @@ export let diagnosticCollection =
   vscode.languages.createDiagnosticCollection("haskell");
 
 export function startGhcidOnHaskellOpen(context: vscode.ExtensionContext) {
-  
+
   statusBarItem = vscode.window.createStatusBarItem(
     vscode.StatusBarAlignment.Left,
     100
@@ -53,7 +53,7 @@ export function startGhcidOnHaskellOpen(context: vscode.ExtensionContext) {
     startGhcidIfNeeded();
   }
 
- 
+
   context.subscriptions.push({
     dispose: () => {
       stopGhcid();
@@ -61,7 +61,7 @@ export function startGhcidOnHaskellOpen(context: vscode.ExtensionContext) {
     },
   });
 
-  
+
   context.subscriptions.push(
     vscode.window.onDidChangeActiveTextEditor(updateErrorDecorations)
   );
@@ -78,8 +78,10 @@ export function stopGhcid() {
     ghcidProcess.kill();
     ghcidProcess = undefined;
   }
-  statusBarItem.text = "Haskell";
-  statusBarItem.tooltip = undefined;
+  if (statusBarItem) {
+    statusBarItem.text = "Haskell";
+    statusBarItem.tooltip = undefined;
+  }
 }
 
 let buffer = "";
@@ -165,7 +167,7 @@ function processGhcidOutput(lines: string[]) {
     if (document) {
       try {
         const lineText = document.lineAt(lineNum).text;
-        
+
         if (lineText.trim().startsWith("import")) {
           const importStart = lineText.indexOf("import");
           range = new vscode.Range(
@@ -174,23 +176,23 @@ function processGhcidOutput(lines: string[]) {
             lineNum,
             lineText.length
           );
-         
+
           cleanedMessage = `Import error: ${cleanedMessage}`;
         } else {
-          
+
           let endCol = colNum + 1;
-         
+
           while (endCol < lineText.length && !/\s/.test(lineText[endCol])) {
             endCol++;
           }
           range = new vscode.Range(lineNum, colNum, lineNum, endCol);
         }
       } catch {
-        
+
         range = new vscode.Range(lineNum, colNum, lineNum, colNum + 1);
       }
     } else {
-      
+
       range = new vscode.Range(lineNum, colNum, lineNum, colNum + 1);
     }
     const diagnostic = new vscode.Diagnostic(
@@ -218,7 +220,7 @@ function processGhcidOutput(lines: string[]) {
     if (line.includes("Loading...") || line.includes("Ok, modules loaded:")) {
       continue;
     }
-   
+
     const errorMatch = line.match(
       /^(.+?):(\d+):(\d+)(?:-(\d+))?:\s*(error|warning|\[error\]|\[warning\]):?\s*(.*)/
     );

@@ -42,7 +42,7 @@ export class HaskellDebugSession extends DebugSession {
   _currentFilePath!: string;
   private _currentLineContent: string = "";
   private _argumentMap: Record<string, string> = {};
-private _callStack: { callerLine: number; callerFunc: string }[] = [];
+  private _callStack: { callerLine: number; callerFunc: string }[] = [];
   // variable panel
 
   protected threadsRequest(
@@ -85,9 +85,9 @@ private _callStack: { callerLine: number; callerFunc: string }[] = [];
 
     variables.push(
       { name: "File", value: fileName, variablesReference: 0 },
-      { name: "Directory", value: dirName, variablesReference: 0 },      
-      );
-      const moduleName = filePath ? await this.getModuleNameFromFile(filePath) : null;
+      { name: "Directory", value: dirName, variablesReference: 0 },
+    );
+    const moduleName = filePath ? await this.getModuleNameFromFile(filePath) : null;
 
     if (moduleName) {
       variables.push({
@@ -125,26 +125,26 @@ private _callStack: { callerLine: number; callerFunc: string }[] = [];
     this.sendResponse(response);
   }
 
-   
-private async getModuleNameFromFile(filePath: string): Promise<string | null> {
-  try {
-    const content = await fs.readFile(filePath, "utf8");
-    const lines = content.split("\n");
- 
-    for (const line of lines) {
-      const match = line.match(/^\s*module\s+([\w.]+)(\s*\(.*\))?\s+where/);
-      if (match) {
-        console.log("✅ Module Found:", match[1]);
-        return match[1];
+
+  private async getModuleNameFromFile(filePath: string): Promise<string | null> {
+    try {
+      const content = await fs.readFile(filePath, "utf8");
+      const lines = content.split("\n");
+
+      for (const line of lines) {
+        const match = line.match(/^\s*module\s+([\w.]+)(\s*\(.*\))?\s+where/);
+        if (match) {
+          console.log("✅ Module Found:", match[1]);
+          return match[1];
+        }
       }
+      console.warn("⚠️ No module declaration found in file:", filePath);
+      return null;
+    } catch (error) {
+      console.error("❌ Failed to read file:", error);
+      return null;
     }
-    console.warn("⚠️ No module declaration found in file:", filePath);
-    return null;
-  } catch (error) {
-    console.error("❌ Failed to read file:", error);
-    return null;
   }
-}
 
   protected async stackTraceRequest(
     response: DebugProtocol.StackTraceResponse,
@@ -181,9 +181,8 @@ private async getModuleNameFromFile(filePath: string): Promise<string | null> {
     } catch (error) {
       this.sendErrorResponse(response, {
         id: 1,
-        format: `Failed to build stack trace: ${
-          error instanceof Error ? error.message : String(error)
-        }`,
+        format: `Failed to build stack trace: ${error instanceof Error ? error.message : String(error)
+          }`,
       });
     }
   }
@@ -194,7 +193,7 @@ private async getModuleNameFromFile(filePath: string): Promise<string | null> {
   ): void {
     const breakpoints = args.breakpoints?.map((bp) => bp.line) || [];
 
-    this._breakpoints = breakpoints; // ✅ Initialize your internal breakpoints list
+    this._breakpoints = breakpoints;
 
     response.body = {
       breakpoints: breakpoints.map((line) => ({
@@ -331,15 +330,15 @@ private async getModuleNameFromFile(filePath: string): Promise<string | null> {
     }
 
     const words = this.extractWords(rhs);
-    
+
     const functions = await extractHaskellFunctions(document.fileName);
 
     for (const word of words) {
       const targetFunc = functions.find((f) => f.name === word);
       if (targetFunc) {
         const targetLine = this.findFunctionDefinitionLine(document, word);
-        console.log(targetLine,targetFunc);
-        
+        console.log(targetLine, targetFunc);
+
         if (targetLine > 0) {
           this._callStack = this._callStack || [];
           this._callStack.push({
@@ -388,65 +387,65 @@ private async getModuleNameFromFile(filePath: string): Promise<string | null> {
     await this.nextRequest(response, args as DebugProtocol.NextArguments);
   }
 
- 
-private extractWords(rhs: string): string[] {
-  
-  const match = rhs.match(/\[\|\|(.+?)\|\|\]/);
-  if (match) {
-    rhs = match[1].trim(); 
-  }
 
-  const words: string[] = [];
-  let currentWord = "";
-  let inString = false;
-  let inParens = 0;
+  private extractWords(rhs: string): string[] {
 
-  for (const char of rhs) {
-    if (char === '"') {
-      inString = !inString;
-    }
-    if (char === "(" && !inString) {
-      inParens++;
-    }
-    if (char === ")" && !inString) {
-      inParens--;
+    const match = rhs.match(/\[\|\|(.+?)\|\|\]/);
+    if (match) {
+      rhs = match[1].trim();
     }
 
-    if (char === " " && !inString && inParens === 0) {
-      if (currentWord) {
-        words.push(currentWord);
-        currentWord = "";
+    const words: string[] = [];
+    let currentWord = "";
+    let inString = false;
+    let inParens = 0;
+
+    for (const char of rhs) {
+      if (char === '"') {
+        inString = !inString;
       }
-    } else {
-      currentWord += char;
+      if (char === "(" && !inString) {
+        inParens++;
+      }
+      if (char === ")" && !inString) {
+        inParens--;
+      }
+
+      if (char === " " && !inString && inParens === 0) {
+        if (currentWord) {
+          words.push(currentWord);
+          currentWord = "";
+        }
+      } else {
+        currentWord += char;
+      }
     }
-  }
 
-  if (currentWord) {
-    words.push(currentWord);
-  }
-
-  return words.filter((w) => ![".", "=", "->"].includes(w));
-}
-
-
-private findFunctionDefinitionLine(
-  document: vscode.TextDocument,
-  funcName: string
-): number {
-  const text = document.getText();
-  const lines = text.split("\n");
-
-  const regex = new RegExp(`^\\s*${funcName}\\b.*=`);
-  
-  for (let i = 0; i < lines.length; i++) {
-    if (regex.test(lines[i])) {
-      return i + 1; // 1-based line number
+    if (currentWord) {
+      words.push(currentWord);
     }
+
+    return words.filter((w) => ![".", "=", "->"].includes(w));
   }
 
-  return 0;
-}
+
+  private findFunctionDefinitionLine(
+    document: vscode.TextDocument,
+    funcName: string
+  ): number {
+    const text = document.getText();
+    const lines = text.split("\n");
+
+    const regex = new RegExp(`^\\s*${funcName}\\b.*=`);
+
+    for (let i = 0; i < lines.length; i++) {
+      if (regex.test(lines[i])) {
+        return i + 1; // 1-based line number
+      }
+    }
+
+    return 0;
+  }
 
   public constructor() {
     super();
@@ -717,7 +716,7 @@ private findFunctionDefinitionLine(
     this.sendEvent(new TerminatedEvent());
     this.sendResponse(response);
   }
-   
+
   protected async stepOutRequest(
     response: DebugProtocol.StepOutResponse,
     args: DebugProtocol.StepOutArguments
@@ -727,29 +726,29 @@ private findFunctionDefinitionLine(
       this.sendResponse(response);
       return;
     }
- 
+
     if (!this._callStack || this._callStack.length === 0) {
       await this.nextRequest(response, args as DebugProtocol.NextArguments);
       return;
     }
- 
+
     const callerInfo = this._callStack.pop();
     if (!callerInfo) {
       await this.nextRequest(response, args as DebugProtocol.NextArguments);
       return;
     }
- 
+
     const { callerLine, callerFunc } = callerInfo;
- 
+
     this._currentLine = callerLine;
- 
+
     this.sendEvent(
       new OutputEvent(
         `Stepped out to caller at line ${callerLine} (${callerFunc})\n`
       )
     );
     this.sendEvent(new StoppedEvent("step", HaskellDebugSession.THREAD_ID));
- 
+
     editor.revealRange(
       new vscode.Range(
         new vscode.Position(callerLine - 1, 0),
@@ -757,10 +756,10 @@ private findFunctionDefinitionLine(
       ),
       vscode.TextEditorRevealType.InCenter
     );
- 
+
     this.sendResponse(response);
   }
- 
+
   protected attachRequest(
     response: DebugProtocol.AttachResponse,
     args: DebugProtocol.AttachRequestArguments,
@@ -768,8 +767,8 @@ private findFunctionDefinitionLine(
   ): void {
     this.launchRequest(response, args);
   }
-    private extractFunctionName(line: string): string {
-      
+  private extractFunctionName(line: string): string {
+
     const match = line.match(/^\s*\w+\s*=\s*(\w+)/);
     return match?.[1] || "<unknown>";
   }

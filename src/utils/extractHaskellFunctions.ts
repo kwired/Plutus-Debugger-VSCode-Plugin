@@ -22,7 +22,11 @@ export async function extractHaskellFunctions(filePath: string): Promise<Haskell
     const line = lines[i];
     const trimmed = line.trim();
 
-    if (!trimmed || skipKeywords.some((kw) => trimmed.startsWith(kw))) {
+    // Skip empty lines, comments, imports, or INDENTED lines (which can't be top-level funcs)
+    if (!trimmed || skipKeywords.some((kw) => trimmed.startsWith(kw)) || /^\s/.test(line)) {
+      if (currentFunc && /^\s/.test(line) && trimmed) {
+        currentFunc.body.push(trimmed);
+      }
       continue;
     }
 
@@ -70,8 +74,8 @@ function extractArguments(argStr: string): string[] {
   let parens = 0;
 
   for (const char of argStr) {
-    if (char === "(") {parens++;}
-    if (char === ")") {parens--;}
+    if (char === "(") { parens++; }
+    if (char === ")") { parens--; }
 
     if (char === " " && parens === 0) {
       if (buffer) {
@@ -83,7 +87,7 @@ function extractArguments(argStr: string): string[] {
     }
   }
 
-  if (buffer) {args.push(buffer);}
+  if (buffer) { args.push(buffer); }
 
   return args;
 }
