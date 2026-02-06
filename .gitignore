@@ -32,4 +32,3 @@ tx.raw
 *.socket
 test_output.txt
 verify_tests.sh
-docs/plutus-debugger-test-coverage.pdf
