@@ -1,0 +1,120 @@
+===========
+1. Test
+===========
+{
+  "result": [
+    {
+      "executionUnits": {
+        "memory": 13400,
+        "steps": 2128100
+      },
+      "lovelaceCost": 927,
+      "scriptHash": "a9b9d196bb9628851e4736b4906bb984da653b530fc5902c7fab80bc"
+    }
+  ],
+  "timingMs": 58.032
+}
+===========
+2. Test
+===========
+{
+  "result": [
+    {
+      "executionUnits": {
+        "memory": 13400,
+        "steps": 2128100
+      },
+      "lovelaceCost": 927,
+      "scriptHash": "a9b9d196bb9628851e4736b4906bb984da653b530fc5902c7fab80bc"
+    }
+  ],
+  "timingMs": 58.78
+}
+===========
+3. Test
+===========
+{
+  "result": [
+    {
+      "executionUnits": {
+        "memory": 13400,
+        "steps": 2128100
+      },
+      "lovelaceCost": 927,
+      "scriptHash": "a9b9d196bb9628851e4736b4906bb984da653b530fc5902c7fab80bc"
+    }
+  ],
+  "timingMs": 59.258
+}
+===========
+4. Test
+===========
+{
+  "result": [
+    {
+      "executionUnits": {
+        "memory": 13400,
+        "steps": 2128100
+      },
+      "lovelaceCost": 927,
+      "scriptHash": "a9b9d196bb9628851e4736b4906bb984da653b530fc5902c7fab80bc"
+    }
+  ],
+  "timingMs": 58.145
+}
+===========
+5. Test
+===========
+{
+  "result": [
+    {
+      "executionUnits": {
+        "memory": 13400,
+        "steps": 2128100
+      },
+      "lovelaceCost": 927,
+      "scriptHash": "a9b9d196bb9628851e4736b4906bb984da653b530fc5902c7fab80bc"
+    }
+  ],
+  "timingMs": 61.69
+}
+===========
+6. Test
+===========
+{
+  "result": [
+    {
+      "executionUnits": {
+        "memory": 13400,
+        "steps": 2128100
+      },
+      "lovelaceCost": 927,
+      "scriptHash": "a9b9d196bb9628851e4736b4906bb984da653b530fc5902c7fab80bc"
+    }
+  ],
+  "timingMs": 58.335
+}
+===========
+7. Test
+===========
+{
+  "result": [
+    {
+      "executionUnits": {
+        "memory": 13400,
+        "steps": 2128100
+      },
+      "lovelaceCost": 927,
+      "scriptHash": "a9b9d196bb9628851e4736b4906bb984da653b530fc5902c7fab80bc"
+    }
+  ],
+  "timingMs": 58.983
+}
+
+===========
+Deviations:
+===========
+
+Runs: 58.032ms, 58.78ms, 59.258ms, 58.145ms, 61.69ms, 58.335ms, 58.983ms
+
+Deviation: 1.255 ms

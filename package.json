@@ -17,7 +17,7 @@
     "cabal",
     "debugger"
   ],
-  "publisher": "wired",
+  "publisher": "kwired",
   "license": "MIT",
   "categories": [
     "Debuggers"

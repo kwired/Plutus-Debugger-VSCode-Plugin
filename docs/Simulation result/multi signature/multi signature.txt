@@ -1,0 +1,60 @@
+{
+  "result": [
+    {
+      "executionUnits": {
+        "memory": 19400,
+        "steps": 3088100
+      },
+      "lovelaceCost": 1343,
+      "scriptHash": "db5e1641c849e788719f58dc31d94fbaec7078851ad85de84020de91"
+    }
+  ],
+  "timingMs": 69.073
+}
+{
+  "result": [
+    {
+      "executionUnits": {
+        "memory": 19400,
+        "steps": 3088100
+      },
+      "lovelaceCost": 1343,
+      "scriptHash": "db5e1641c849e788719f58dc31d94fbaec7078851ad85de84020de91"
+    }
+  ],
+  "timingMs": 58.835
+}
+
+
+{
+  "result": [
+    {
+      "executionUnits": {
+        "memory": 19400,
+        "steps": 3088100
+      },
+      "lovelaceCost": 1343,
+      "scriptHash": "db5e1641c849e788719f58dc31d94fbaec7078851ad85de84020de91"
+    }
+  ],
+  "timingMs": 59.883
+}
+{
+  "result": [
+    {
+      "executionUnits": {
+        "memory": 19400,
+        "steps": 3088100
+      },
+      "lovelaceCost": 1343,
+      "scriptHash": "db5e1641c849e788719f58dc31d94fbaec7078851ad85de84020de91"
+    }
+  ],
+  "timingMs": 59.641
+}
+===========
+Deviations:
+===========
+
+Runs: 69.073ms, 58.835ms, 59.883ms, 59.641ms
+Deviation: 4.574 ms

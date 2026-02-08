@@ -32,3 +32,5 @@ tx.raw
 *.socket
 test_output.txt
 verify_tests.sh
+.vscode
+src/debugAdapter.ts.bak
