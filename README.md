@@ -17,10 +17,10 @@ It also runs `ghcid` in the background to highlight errors and warnings as you t
 
 You'll need a few things installed on your machine for this to work:
 
-*   **Node.js**: The extension runs on this.
-*   **GHC & Cabal**: Standard Haskell toolchain.
-*   **ghcid**: If you want the live error checking.
-*   **cardano-cli**: Needed if you're using the simulator to query UTxOs.
+- **Node.js**: The extension runs on this.
+- **GHC & Cabal**: Standard Haskell toolchain.
+- **ghcid**: If you want the live error checking.
+- **cardano-cli**: Needed if you're using the simulator to query UTxOs.
 
 ## How to build it
 
@@ -35,9 +35,11 @@ To test it out, just hit `F5` in VSCode to launch a new window with the extensio
 ## How to use it
 
 ### Debugging Haskell
+
 Open up your Haskell project (make sure it's a Cabal project). Go to the **Run and Debug** tab in VSCode and choose **"Debug Cabal Project"**. Hit start, and once it loads (give it a second to spin up GHCi), you should be able to hit your breakpoints.
 
 ### Using the Simulator
+
 You'll see a little Plutus icon in the Activity Bar. Click that to open the simulator view.
 From there you can use the command palette (`Ctrl+Shift+P` / `Cmd+Shift+P`) to trigger things like `Simulate Plutus Transaction` or `Get latest UTXO Details` if you have a local node running.
 
@@ -45,10 +47,8 @@ From there you can use the command palette (`Ctrl+Shift+P` / `Cmd+Shift+P`) to t
 
 We've got a pretty decent test suite set up with Jest.
 
-*   Run everything: `npm test`
-*   Check coverage: `npm test -- --coverage`
-
-(We're currently aiming for >90% coverage on core modules, and we're hitting that target.)
+- Run everything: `npm test`
+- Check coverage: `npm test -- --coverage`
 
 ## Contributing
 
